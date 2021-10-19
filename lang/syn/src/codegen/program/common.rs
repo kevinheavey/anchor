@@ -1,6 +1,5 @@
 use crate::parser;
 use crate::{IxArg, State};
-use heck::CamelCase;
 use quote::quote;
 
 // Namespace for calculating state instruction sighash signatures.
@@ -29,7 +28,7 @@ pub fn sighash_ctor() -> [u8; 8] {
 pub fn generate_ix_variant(name: String, args: &[IxArg]) -> proc_macro2::TokenStream {
     let ix_arg_names: Vec<&syn::Ident> = args.iter().map(|arg| &arg.name).collect();
     let ix_name_camel: proc_macro2::TokenStream = {
-        let n = name.to_camel_case();
+        let n = name;
         n.parse().unwrap()
     };
 

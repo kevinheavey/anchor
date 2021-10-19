@@ -37,7 +37,7 @@ pub struct IdlInstruction {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
+#[serde()]
 pub struct IdlAccounts {
     pub name: String,
     pub accounts: Vec<IdlAccountItem>,
@@ -51,7 +51,7 @@ pub enum IdlAccountItem {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
+#[serde()]
 pub struct IdlAccount {
     pub name: String,
     pub is_mut: bool,
@@ -108,7 +108,7 @@ pub enum EnumFields {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
+#[serde()]
 pub enum IdlType {
     Bool,
     U8,
