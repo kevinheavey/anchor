@@ -34,43 +34,43 @@ export function accountSize(idl: Idl, idlAccount: IdlTypeDef): number {
 // 1. Users should override this value in such cases.
 function typeSize(idl: Idl, ty: IdlType): number {
   switch (ty) {
-    case "bool":
+    case "Bool":
       return 1;
-    case "u8":
+    case "U8":
       return 1;
-    case "i8":
+    case "I8":
       return 1;
-    case "i16":
+    case "I16":
       return 2;
-    case "u16":
+    case "U16":
       return 2;
-    case "u32":
+    case "U32":
       return 4;
-    case "i32":
+    case "I32":
       return 4;
-    case "u64":
+    case "U64":
       return 8;
-    case "i64":
+    case "I64":
       return 8;
-    case "u128":
+    case "U128":
       return 16;
-    case "i128":
+    case "I128":
       return 16;
-    case "bytes":
+    case "Bytes":
       return 1;
-    case "string":
+    case "String":
       return 1;
-    case "publicKey":
+    case "PublicKey":
       return 32;
     default:
-      if ("vec" in ty) {
+      if ("Vec" in ty) {
         return 1;
       }
-      if ("option" in ty) {
-        return 1 + typeSize(idl, ty.option);
+      if ("Option" in ty) {
+        return 1 + typeSize(idl, ty.Option);
       }
-      if ("defined" in ty) {
-        const filtered = idl.types?.filter((t) => t.name === ty.defined) ?? [];
+      if ("Defined" in ty) {
+        const filtered = idl.types?.filter((t) => t.name === ty.Defined) ?? [];
         if (filtered.length !== 1) {
           throw new IdlError(`Type not found: ${JSON.stringify(ty)}`);
         }
@@ -78,9 +78,9 @@ function typeSize(idl: Idl, ty: IdlType): number {
 
         return accountSize(idl, typeDef);
       }
-      if ("array" in ty) {
-        let arrayTy = ty.array[0];
-        let arraySize = ty.array[1];
+      if ("Array" in ty) {
+        let arrayTy = ty.Array[0];
+        let arraySize = ty.Array[1];
         return typeSize(idl, arrayTy) * arraySize;
       }
       throw new Error(`Invalid type ${JSON.stringify(ty)}`);

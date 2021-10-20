@@ -31,13 +31,13 @@ export default class NamespaceFactory {
     programId: PublicKey,
     provider: Provider
   ): [
-    RpcNamespace<IDL>,
-    InstructionNamespace<IDL>,
-    TransactionNamespace<IDL>,
-    AccountNamespace<IDL>,
-    SimulateNamespace<IDL>,
-    StateClient<IDL> | undefined
-  ] {
+      RpcNamespace<IDL>,
+      InstructionNamespace<IDL>,
+      TransactionNamespace<IDL>,
+      AccountNamespace<IDL>,
+      SimulateNamespace<IDL>,
+      StateClient<IDL> | undefined
+    ] {
     const rpc: RpcNamespace = {};
     const instruction: InstructionNamespace = {};
     const transaction: TransactionNamespace = {};
@@ -46,7 +46,6 @@ export default class NamespaceFactory {
     const idlErrors = parseIdlErrors(idl);
 
     const state = StateFactory.build(idl, coder, programId, provider);
-
     idl.instructions.forEach(<I extends AllInstructions<IDL>>(idlIx: I) => {
       const ixItem = InstructionFactory.build<IDL, I>(
         idlIx,

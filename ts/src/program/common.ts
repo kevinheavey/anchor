@@ -2,6 +2,7 @@ import EventEmitter from "eventemitter3";
 import { PublicKey } from "@solana/web3.js";
 import { Idl, IdlInstruction, IdlAccountItem, IdlStateMethod } from "../idl";
 import { Accounts } from "./context";
+import camelcase from "camelcase";
 
 export type Subscription = {
   listener: number;
@@ -46,7 +47,8 @@ export function validateAccounts(
     if ("accounts" in acc) {
       validateAccounts(acc.accounts, accounts[acc.name] as Accounts);
     } else {
-      if (accounts[acc.name] === undefined) {
+      let as_camel_case = camelcase(acc.name);
+      if (accounts[as_camel_case] === undefined) {
         throw new Error(`Invalid arguments: ${acc.name} not provided.`);
       }
     }

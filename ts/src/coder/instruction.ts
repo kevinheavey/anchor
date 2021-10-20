@@ -77,7 +77,7 @@ export class InstructionCoder {
 
   private _encode(nameSpace: string, ixName: string, ix: any): Buffer {
     const buffer = Buffer.alloc(1000); // TODO: use a tighter buffer.
-    const methodName = camelCase(ixName);
+    const methodName = ixName;
     const layout = this.ixLayout.get(methodName);
     if (!layout) {
       throw new Error(`Unknown method: ${methodName}`);
@@ -220,17 +220,17 @@ class InstructionFormatter {
       return idlType as string;
     }
 
-    if ("vec" in idlType) {
-      return `Vec<${this.formatIdlType(idlType.vec)}>`;
+    if ("Vec" in idlType) {
+      return `Vec<${this.formatIdlType(idlType.Vec)}>`;
     }
-    if ("option" in idlType) {
-      return `Option<${this.formatIdlType(idlType.option)}>`;
+    if ("Option" in idlType) {
+      return `Option<${this.formatIdlType(idlType.Option)}>`;
     }
-    if ("defined" in idlType) {
-      return idlType.defined;
+    if ("Defined" in idlType) {
+      return idlType.Defined;
     }
-    if ("array" in idlType) {
-      return `Array<${idlType.array[0]}; ${idlType.array[1]}>`;
+    if ("Array" in idlType) {
+      return `Array<${idlType.Array[0]}; ${idlType.Array[1]}>`;
     }
 
     throw new Error(`Unknown IDL type: ${idlType}`);
@@ -268,10 +268,10 @@ class InstructionFormatter {
       return data === null
         ? "null"
         : this.formatIdlData(
-            // @ts-ignore
-            { name: "", type: idlField.type.option },
-            data
-          );
+          // @ts-ignore
+          { name: "", type: idlField.type.option },
+          data
+        );
     }
     // @ts-ignore
     if (idlField.type.defined) {

@@ -25,6 +25,7 @@ import {
   InstructionContextFnArgs,
   MakeInstructionsNamespace,
 } from "./types";
+import camelcase from "camelcase";
 
 export default class InstructionNamespaceFactory {
   public static build<IDL extends Idl, I extends AllInstructions<IDL>>(
@@ -89,9 +90,9 @@ export default class InstructionNamespaceFactory {
         } else {
           const account: IdlAccount = acc as IdlAccount;
           return {
-            pubkey: translateAddress(ctx[acc.name] as Address),
-            isWritable: account.isMut,
-            isSigner: account.isSigner,
+            pubkey: translateAddress(ctx[camelcase(acc.name)] as Address),
+            isWritable: account.is_mut,
+            isSigner: account.is_signer,
           };
         }
       })
@@ -131,18 +132,18 @@ export default class InstructionNamespaceFactory {
 export type InstructionNamespace<
   IDL extends Idl = Idl,
   I extends IdlInstruction = IDL["instructions"][number]
-> = MakeInstructionsNamespace<
-  IDL,
-  I,
-  TransactionInstruction,
-  {
-    [M in keyof AllInstructionsMap<IDL>]: {
-      accounts: (
-        ctx: Accounts<AllInstructionsMap<IDL>[M]["accounts"][number]>
-      ) => unknown;
-    };
-  }
->;
+  > = MakeInstructionsNamespace<
+    IDL,
+    I,
+    TransactionInstruction,
+    {
+      [M in keyof AllInstructionsMap<IDL>]: {
+        accounts: (
+          ctx: Accounts<AllInstructionsMap<IDL>[M]["accounts"][number]>
+        ) => unknown;
+      };
+    }
+  >;
 
 /**
  * Function to create a `TransactionInstruction` generated from an IDL.
@@ -152,7 +153,7 @@ export type InstructionNamespace<
 export type InstructionFn<
   IDL extends Idl = Idl,
   I extends AllInstructions<IDL> = AllInstructions<IDL>
-> = InstructionContextFn<IDL, I, TransactionInstruction> &
+  > = InstructionContextFn<IDL, I, TransactionInstruction> &
   IxProps<Accounts<I["accounts"][number]>>;
 
 type IxProps<A extends Accounts> = {

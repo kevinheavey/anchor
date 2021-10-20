@@ -40,8 +40,8 @@ export type IdlAccountItem = IdlAccount | IdlAccounts;
 
 export type IdlAccount = {
   name: string;
-  isMut: boolean;
-  isSigner: boolean;
+  is_mut: boolean;
+  is_signer: boolean;
 };
 
 // A nested/recursive version of IdlAccount.
@@ -75,20 +75,20 @@ type IdlTypeDefTy = IdlTypeDefTyEnum | IdlTypeDefTyStruct;
 type IdlTypeDefStruct = Array<IdlField>;
 
 export type IdlType =
-  | "bool"
-  | "u8"
-  | "i8"
-  | "u16"
-  | "i16"
-  | "u32"
-  | "i32"
-  | "u64"
-  | "i64"
-  | "u128"
-  | "i128"
-  | "bytes"
-  | "string"
-  | "publicKey"
+  | "Bool"
+  | "U8"
+  | "I8"
+  | "U16"
+  | "I16"
+  | "U32"
+  | "I32"
+  | "U64"
+  | "I64"
+  | "U128"
+  | "I128"
+  | "Bytes"
+  | "String"
+  | "PublicKey"
   | IdlTypeDefined
   | IdlTypeOption
   | IdlTypeVec
@@ -96,19 +96,19 @@ export type IdlType =
 
 // User defined type.
 export type IdlTypeDefined = {
-  defined: string;
+  Defined: string;
 };
 
 export type IdlTypeOption = {
-  option: IdlType;
+  Option: IdlType;
 };
 
 export type IdlTypeVec = {
-  vec: IdlType;
+  Vec: IdlType;
 };
 
 export type IdlTypeArray = {
-  array: [idlType: IdlType, size: number];
+  Array: [idlType: IdlType, size: number];
 };
 
 export type IdlEnumVariant = {

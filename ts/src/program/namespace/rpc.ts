@@ -74,7 +74,7 @@ export default class RpcFactory {
 export type RpcNamespace<
   IDL extends Idl = Idl,
   I extends AllInstructions<IDL> = AllInstructions<IDL>
-> = MakeInstructionsNamespace<IDL, I, Promise<TransactionSignature>>;
+  > = MakeInstructionsNamespace<IDL, I, Promise<TransactionSignature>>;
 
 /**
  * RpcFn is a single RPC method generated from an IDL, sending a transaction
@@ -83,4 +83,4 @@ export type RpcNamespace<
 export type RpcFn<
   IDL extends Idl = Idl,
   I extends AllInstructions<IDL> = AllInstructions<IDL>
-> = InstructionContextFn<IDL, I, Promise<TransactionSignature>>;
+  > = InstructionContextFn<IDL, I, Promise<TransactionSignature>>;

@@ -12,50 +12,50 @@ export class IdlCoder {
     const fieldName =
       field.name !== undefined ? camelCase(field.name) : undefined;
     switch (field.type) {
-      case "bool": {
+      case "Bool": {
         return borsh.bool(fieldName);
       }
-      case "u8": {
+      case "U8": {
         return borsh.u8(fieldName);
       }
-      case "i8": {
+      case "I8": {
         return borsh.i8(fieldName);
       }
-      case "u16": {
+      case "U16": {
         return borsh.u16(fieldName);
       }
-      case "i16": {
+      case "I16": {
         return borsh.i16(fieldName);
       }
-      case "u32": {
+      case "U32": {
         return borsh.u32(fieldName);
       }
-      case "i32": {
+      case "I32": {
         return borsh.i32(fieldName);
       }
-      case "u64": {
+      case "U64": {
         return borsh.u64(fieldName);
       }
-      case "i64": {
+      case "I64": {
         return borsh.i64(fieldName);
       }
-      case "u128": {
+      case "U128": {
         return borsh.u128(fieldName);
       }
-      case "i128": {
+      case "I128": {
         return borsh.i128(fieldName);
       }
-      case "bytes": {
+      case "Bytes": {
         return borsh.vecU8(fieldName);
       }
-      case "string": {
+      case "String": {
         return borsh.str(fieldName);
       }
-      case "publicKey": {
+      case "PublicKey": {
         return borsh.publicKey(fieldName);
       }
       default: {
-        if ("vec" in field.type) {
+        if ("Vec" in field.type) {
           return borsh.vec(
             IdlCoder.fieldLayout(
               {
@@ -67,19 +67,19 @@ export class IdlCoder {
             ),
             fieldName
           );
-        } else if ("option" in field.type) {
+        } else if ("Option" in field.type) {
           return borsh.option(
             IdlCoder.fieldLayout(
               {
                 name: undefined,
-                type: field.type.option,
+                type: field.type.Option,
               },
               types
             ),
             fieldName
           );
-        } else if ("defined" in field.type) {
-          const defined = field.type.defined;
+        } else if ("Defined" in field.type) {
+          const defined = field.type.Defined;
           // User defined type.
           if (types === undefined) {
             throw new IdlError("User defined types not provided");
@@ -89,9 +89,9 @@ export class IdlCoder {
             throw new IdlError(`Type not found: ${JSON.stringify(field)}`);
           }
           return IdlCoder.typeDefLayout(filtered[0], types, fieldName);
-        } else if ("array" in field.type) {
-          let arrayTy = field.type.array[0];
-          let arrayLen = field.type.array[1];
+        } else if ("Array" in field.type) {
+          let arrayTy = field.type.Array[0];
+          let arrayLen = field.type.Array[1];
           let innerLayout = IdlCoder.fieldLayout(
             {
               name: undefined,
