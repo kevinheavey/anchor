@@ -15,6 +15,7 @@ import {
 import { IdlCoder } from "./idl";
 import { sighash } from "./common";
 import { AccountMeta, PublicKey } from "@solana/web3.js";
+import camelcase from "camelcase";
 
 /**
  * Namespace for state method function signatures.
@@ -77,7 +78,7 @@ export class InstructionCoder {
 
   private _encode(nameSpace: string, ixName: string, ix: any): Buffer {
     const buffer = Buffer.alloc(1000); // TODO: use a tighter buffer.
-    const methodName = ixName;
+    const methodName = camelcase(ixName);
     const layout = this.ixLayout.get(methodName);
     if (!layout) {
       throw new Error(`Unknown method: ${methodName}`);
