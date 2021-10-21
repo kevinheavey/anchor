@@ -1,6 +1,7 @@
 use crate::codegen::program::common::*;
 use crate::parser;
 use crate::Program;
+use heck::CamelCase;
 use quote::quote;
 
 pub fn generate(program: &Program) -> proc_macro2::TokenStream {
@@ -62,6 +63,7 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
                             .sig
                             .ident
                             .to_string()
+                            .to_camel_case()
                             .parse()
                             .unwrap();
                         let raw_args: Vec<proc_macro2::TokenStream> = method
@@ -120,7 +122,8 @@ pub fn generate(program: &Program) -> proc_macro2::TokenStream {
         .iter()
         .map(|ix| {
             let name = &ix.raw_method.sig.ident.to_string();
-            let ix_name_camel = proc_macro2::Ident::new(&name, ix.raw_method.sig.ident.span());
+            let ix_name_camel =
+                proc_macro2::Ident::new(&name.to_camel_case(), ix.raw_method.sig.ident.span());
             let raw_args: Vec<proc_macro2::TokenStream> = ix
                 .args
                 .iter()
