@@ -61,7 +61,7 @@ export class IdlCoder {
               {
                 name: undefined,
                 // @ts-ignore
-                type: field.type.vec,
+                type: field.type.Vec,
               },
               types
             ),

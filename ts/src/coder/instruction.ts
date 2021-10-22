@@ -246,7 +246,7 @@ class InstructionFormatter {
       return data.toString();
     }
     // @ts-ignore
-    if (idlField.type.vec) {
+    if (idlField.type.Vec) {
       // @ts-ignore
       return (
         "[" +
@@ -255,7 +255,7 @@ class InstructionFormatter {
           .map((d: IdlField) =>
             this.formatIdlData(
               // @ts-ignore
-              { name: "", type: idlField.type.vec },
+              { name: "", type: idlField.type.Vec },
               d
             )
           )
@@ -264,26 +264,26 @@ class InstructionFormatter {
       );
     }
     // @ts-ignore
-    if (idlField.type.option) {
+    if (idlField.type.Option) {
       // @ts-ignore
       return data === null
         ? "null"
         : this.formatIdlData(
           // @ts-ignore
-          { name: "", type: idlField.type.option },
+          { name: "", type: idlField.type.Option },
           data
         );
     }
     // @ts-ignore
-    if (idlField.type.defined) {
+    if (idlField.type.Defined) {
       if (types === undefined) {
         throw new Error("User defined types not provided");
       }
       // @ts-ignore
-      const filtered = types.filter((t) => t.name === idlField.type.defined);
+      const filtered = types.filter((t) => t.name === idlField.type.Defined);
       if (filtered.length !== 1) {
         // @ts-ignore
-        throw new Error(`Type not found: ${idlField.type.defined}`);
+        throw new Error(`Type not found: ${idlField.type.Defined}`);
       }
       return InstructionFormatter.formatIdlDataDefined(
         filtered[0],

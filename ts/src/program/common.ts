@@ -44,12 +44,12 @@ export function validateAccounts(
   accounts: Accounts = {}
 ) {
   ixAccounts.forEach((acc) => {
+    const asCamelCase = camelcase(acc.name);
     if ("accounts" in acc) {
-      validateAccounts(acc.accounts, accounts[acc.name] as Accounts);
+      validateAccounts(acc.accounts, accounts[asCamelCase] as Accounts);
     } else {
-      let as_camel_case = camelcase(acc.name);
-      if (accounts[as_camel_case] === undefined) {
-        throw new Error(`Invalid arguments: ${acc.name} not provided.`);
+      if (accounts[asCamelCase] === undefined) {
+        throw new Error(`Invalid arguments: ${asCamelCase} not provided.`);
       }
     }
   });

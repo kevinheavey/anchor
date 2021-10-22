@@ -41,6 +41,10 @@ export default class InstructionNamespaceFactory {
       ...args: InstructionContextFnArgs<IDL, I>
     ): TransactionInstruction => {
       const [ixArgs, ctx] = splitArgsAndCtx(idlIx, [...args]);
+      console.log("ixArgs");
+      console.log(ixArgs);
+      console.log("ctx");
+      console.log(ctx);
       validateAccounts(idlIx.accounts, ctx.accounts);
       validateInstruction(idlIx, ...args);
 
@@ -81,8 +85,9 @@ export default class InstructionNamespaceFactory {
         // Nested accounts.
         const nestedAccounts: IdlAccountItem[] | undefined =
           "accounts" in acc ? acc.accounts : undefined;
+        const camelCaseAccName = camelcase(acc.name);
         if (nestedAccounts !== undefined) {
-          const rpcAccs = ctx[acc.name] as Accounts;
+          const rpcAccs = ctx[camelCaseAccName] as Accounts;
           return InstructionNamespaceFactory.accountsArray(
             rpcAccs,
             (acc as IdlAccounts).accounts
@@ -90,7 +95,7 @@ export default class InstructionNamespaceFactory {
         } else {
           const account: IdlAccount = acc as IdlAccount;
           return {
-            pubkey: translateAddress(ctx[camelcase(acc.name)] as Address),
+            pubkey: translateAddress(ctx[camelCaseAccName] as Address),
             isWritable: account.is_mut,
             isSigner: account.is_signer,
           };
